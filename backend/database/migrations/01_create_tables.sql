@@ -1,0 +1,66 @@
+CREATE DATABASE IF NOT EXISTS sgp_pacientes CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE sgp_pacientes;
+
+CREATE TABLE IF NOT EXISTS departamentos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS municipios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    departamento_id INT NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (departamento_id) REFERENCES departamentos(id) ON DELETE CASCADE,
+    INDEX idx_departamento (departamento_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS tipos_documento (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS genero (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(20) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS paciente (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tipo_documento_id INT NOT NULL,
+    numero_documento VARCHAR(20) NOT NULL,
+    nombre1 VARCHAR(50) NOT NULL,
+    nombre2 VARCHAR(50) DEFAULT NULL,
+    apellido1 VARCHAR(50) NOT NULL,
+    apellido2 VARCHAR(50) DEFAULT NULL,
+    genero_id INT NOT NULL,
+    departamento_id INT NOT NULL,
+    municipio_id INT NOT NULL,
+    correo VARCHAR(100) NOT NULL,
+    foto LONGTEXT DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (tipo_documento_id) REFERENCES tipos_documento(id),
+    FOREIGN KEY (genero_id) REFERENCES genero(id),
+    FOREIGN KEY (departamento_id) REFERENCES departamentos(id),
+    FOREIGN KEY (municipio_id) REFERENCES municipios(id),
+    UNIQUE KEY unique_documento (tipo_documento_id, numero_documento),
+    INDEX idx_documento (numero_documento),
+    INDEX idx_correo (correo)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

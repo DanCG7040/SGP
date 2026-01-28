@@ -1,0 +1,19 @@
+{
+    "name": "sgp/pacientes-api",
+    "description": "API RESTful para gestión de pacientes",
+    "type": "project",
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.5"
+    },
+    "autoload": {
+        "classmap": [
+            "utils/",
+            "models/",
+            "controllers/",
+            "middleware/"
+        ]
+    }
+}
