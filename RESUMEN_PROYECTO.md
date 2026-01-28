@@ -2,7 +2,7 @@
 
 ## Descripción General
 
-Sistema CRUD completo para gestión de pacientes desarrollado como prueba técnica. Implementa una API RESTful con PHP en el backend y una interfaz web moderna con HTML, CSS y JavaScript en el frontend.
+Sistema CRUD completo para gestión de pacientes desarrollado como prueba técnica. Implementa una API RESTful con PHP en el backend y una interfaz web con HTML, CSS y JavaScript en el frontend.
 
 ## Tecnologías Utilizadas
 

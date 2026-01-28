@@ -1,4 +1,4 @@
-# Cumplimiento de Requisitos - Sección 3
+# Cumplimiento de Requisitos 
 
 ## Requisitos de Base de Datos
 
